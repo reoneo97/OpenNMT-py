@@ -9,7 +9,7 @@ from onmt.encoders.weighted_transformer import WeightedTransformerEncoder
 
 str2enc = {"ggnn": GGNNEncoder, "rnn": RNNEncoder, "brnn": RNNEncoder,
            "cnn": CNNEncoder, "transformer": TransformerEncoder,
-           "mean": MeanEncoder}
+           "mean": MeanEncoder,"weighted_transformer":WeightedTransformerEncoder}
 
 __all__ = ["EncoderBase", "TransformerEncoder", "RNNEncoder", "CNNEncoder",
            "MeanEncoder", "str2enc","WeightedTransformerEncoder"]

@@ -40,7 +40,7 @@ class WeightedAttention(nn.Module):
         self.max_relative_positions= max_relative_positions
         self.dropout = nn.Dropout(dropout)
 
-        final_linear_per_head = nn.Linear(self.dim_per_head,self.dim_per_head)
+        final_linear_per_head = nn.Linear(self.dim_per_head,self.model_dim)
         self.final_linear = _get_clones(final_linear_per_head, head_count)
 
 
@@ -154,21 +154,24 @@ class WeightedAttention(nn.Module):
             context_original += relative_matmul(drop_attn, relations_values,False)
         
         # Context Original - (Batch x N_head x Seq_len x d_h) (10 x 8 x 20 x 64)
-        # final_linear is a list of linear layers
+        # final_linear is a list of linear layers for each head
         kappa = self.kappa_softmax(self.kappa_w)
 
-        context = torch.cat([self.final_linear[i]\
+
+        linear_out = torch.cat([self.final_linear[i]\
             (torch.narrow(context_original,1,i,1).contiguous()) \
             for i in range(self.head_count)],1)
 
-        context = torch.mul(context.transpose(1,3).contiguous(),kappa)
-        output = unshape(context.transpose(1,3).contiguous())
+        # Concat - (Batch x N_head x Seq_len x d_model) (10 x 8 x 20 x 512)
+        out = torch.mul(linear_out.transpose(1,3).contiguous(),kappa)
+        out = out.transpose(1,3).contiguous()
+
 
         attns = attn \
             .view(batch_size, head_count,
                   query_len, key_len)
 
-        return output,attns
+        return out, attns
     def update_dropout(self, dropout):
         self.dropout.p = dropout
 

@@ -6,7 +6,7 @@ from onmt.modules import WeightedAttention, MultiHeadedAttention
 from onmt.modules.position_ffn import PositionwiseFeedForward
 from onmt.modules.position_ffn import ActivationFunction
 from onmt.utils.misc import sequence_mask
-from onmt.decoders.transformer import TransformerDecoderLayerBase, TransformerDecoderBase
+from onmt.decoders.transformer import TransformerDecoderLayerBase, TransformerDecoder
 
 
 class WeightedTransformerDecoderLayer(TransformerDecoderLayerBase):

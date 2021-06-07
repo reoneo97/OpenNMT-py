@@ -268,15 +268,17 @@ def model_opts(parser):
 
     group.add('--encoder_type', '-encoder_type', type=str, default='rnn',
               choices=['rnn', 'brnn', 'ggnn', 'mean', 'transformer', 'cnn',
-                       'transformer_lm'],
+                       'transformer_lm',"weighted_transformer"],
               help="Type of encoder layer to use. Non-RNN layers "
                    "are experimental. Options are "
-                   "[rnn|brnn|ggnn|mean|transformer|cnn|transformer_lm].")
+                   "[rnn|brnn|ggnn|mean|transformer|cnn|transformer_lm|"
+                   "weighted_transformer].")
     group.add('--decoder_type', '-decoder_type', type=str, default='rnn',
-              choices=['rnn', 'transformer', 'cnn', 'transformer_lm'],
+              choices=['rnn', 'transformer', 'cnn', 'transformer_lm',
+                       'weighted_transformer'],
               help="Type of decoder layer to use. Non-RNN layers "
                    "are experimental. Options are "
-                   "[rnn|transformer|cnn|transformer].")
+                   "[rnn|transformer|cnn|transformer|weighted_transformer].")
 
     group.add('--layers', '-layers', type=int, default=-1,
               help='Number of layers in enc/dec.')
@@ -692,7 +694,7 @@ def _add_decoding_opts(parser):
         'Decoding tricks',
         '.. Tip:: Following options can be used to limit the decoding length '
         'or content.'
-        )
+    )
     # Decoding Length constraint
     group.add('--min_length', '-min_length', type=int, default=0,
               help='Minimum prediction length')

@@ -3,6 +3,7 @@ from onmt.decoders.decoder import DecoderBase, InputFeedRNNDecoder, \
     StdRNNDecoder
 from onmt.decoders.transformer import TransformerDecoder, TransformerLMDecoder
 from onmt.decoders.cnn_decoder import CNNDecoder
+from onmt.decoders.weighted_transformer import WeightedTransformerDecoder
 
 
 str2dec = {"rnn": StdRNNDecoder, "ifrnn": InputFeedRNNDecoder,
@@ -10,4 +11,5 @@ str2dec = {"rnn": StdRNNDecoder, "ifrnn": InputFeedRNNDecoder,
            "transformer_lm": TransformerLMDecoder}
 
 __all__ = ["DecoderBase", "TransformerDecoder", "StdRNNDecoder", "CNNDecoder",
-           "InputFeedRNNDecoder", "str2dec", "TransformerLMDecoder"]
+           "InputFeedRNNDecoder", "str2dec", "TransformerLMDecoder",
+           "WeightedTransformerDecoder"]
